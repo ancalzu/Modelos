@@ -1,17 +1,14 @@
 # Paso 1: Utiliza una imagen base con Maven para construir tu proyecto
 FROM maven:3.8.4-openjdk-17 as builder
 
-# Establece el token de SonarQube directamente (No recomendado para producción)
-ENV SONAR_TOKEN="squ_e9fe96ad6be6d4da20511d696a682a4081cec9ca"
-
 # Copia el código fuente del proyecto al contenedor
 COPY src /home/app/src
 COPY pom.xml /home/app
 
-# Inserta el token de SonarQube en el archivo pom.xml
-RUN sed -i "s|<sonar.login>.*</sonar.login>|<sonar.login>${SONAR_TOKEN}</sonar.login>|" /home/app/pom.xml
+# Ejecuta PMD check para análisis estático del código
+RUN mvn -f /home/app/pom.xml pmd:check
 
-# Construye la aplicación
+# Construye la aplicación (solo se ejecutará si PMD check es exitoso)
 RUN mvn -f /home/app/pom.xml clean package
 
 # Paso 2: Utiliza una imagen base de OpenJDK para ejecutar tu aplicación
