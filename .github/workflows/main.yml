@@ -50,7 +50,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: davidcas212/models:latest
+          tags: davidcas212/models:latesttest
 
   deploy-shift:
     needs: create-and-publish-container
