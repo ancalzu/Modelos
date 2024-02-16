@@ -25,5 +25,4 @@ class ControllerIntegrationTest {
         ResponseEntity<String> response = restTemplate.getForEntity("/", String.class);
         assertEquals("Hello world since openshift", response.getBody());
     }
-
 }
