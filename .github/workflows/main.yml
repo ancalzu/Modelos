@@ -52,16 +52,16 @@ jobs:
           push: true
           tags: davidcas212/models:latest
 
-    deploy-shift:
-      needs: create-and-publish-container
-      runs-on: ubuntu-latest
-      steps:
-        - name: Deploy to OpenShift
-          run: |
-            oc login --token=${{ secrets.OPENSHIFT_TOKEN }} --server=${{ secrets.OPENSHIFT_SERVER }}
-            oc project andrea-calderonz-dev 
-            oc new-app davidcas212/models:latest --name=modelos # Replace 'my-application' with the actual application name you want
-            oc expose svc/modelos  # This exposes the service as a rout
+  deploy-shift:
+    needs: create-and-publish-container
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to OpenShift
+        run: |
+           oc login --token=${{ secrets.OPENSHIFT_TOKEN }} --server=${{ secrets.OPENSHIFT_SERVER }}
+           oc project andrea-calderonz-dev 
+           oc new-app davidcas212/models:latest --name=modelos # Replace 'my-application' with the actual application name you want
+           oc expose svc/modelos  # This exposes the service as a rout
 
   update-k8s:
     needs: create-and-publish-container
