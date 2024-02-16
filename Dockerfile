@@ -8,8 +8,11 @@ COPY pom.xml /home/app
 # Ejecuta PMD check para análisis estático del código
 RUN mvn -f /home/app/pom.xml pmd:check
 
-# Construye la aplicación (solo se ejecutará si PMD check es exitoso)
-RUN mvn -f /home/app/pom.xml clean package
+# Ejecuta solo las pruebas unitarias
+RUN mvn -f /home/app/pom.xml test
+
+# Ejecuta solo las pruebas de integración
+RUN mvn -f /home/app/pom.xml verify -DskipUnitTests=true
 
 # Paso 2: Utiliza una imagen base de OpenJDK para ejecutar tu aplicación
 FROM openjdk:17

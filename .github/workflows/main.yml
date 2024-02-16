@@ -30,8 +30,9 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '17'
+          distribution: 'temurin'
       - name: Run Integration Tests
-        run: mvn verify # Asegúrate de que tus pruebas de integración estén configuradas correctamente aquí.
+        run: mvn verify
 
   create-and-publish-container:
     needs: integration-test
@@ -42,14 +43,16 @@ jobs:
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
+          #davidcastaneda212
           password: ${{ secrets.DOCKER_PASSWORD }}
+          #Nrisimhadeva2122+
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
         with:
           context: .
           file: ./Dockerfile
           push: true
-          tags: yourusername/yourimage:latest
+          tags: models/models:latest
 
   update-k8s:
     needs: create-and-publish-container
