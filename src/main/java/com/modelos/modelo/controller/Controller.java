@@ -8,7 +8,7 @@ public class Controller {
 
     @GetMapping("/")
     public String helloWorld(){
-        return "Hello world";
+        return "Hello world since openshift";
     }
 
 }
