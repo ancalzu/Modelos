@@ -81,5 +81,5 @@ jobs:
         run: |
           oc login --token=${{ secrets.OPENSHIFT_TOKEN }} --server=${{ secrets.OPENSHIFT_SERVER }}
           oc project ancalzu-dev 
-          oc new-app davidcas212/models:$${{ steps.prep.outputs.date }}-${{ steps.prep.outputs.sha_short }} --name=models
+          oc new-app davidcas212/models:${{ steps.prep.outputs.date }}-${{ steps.prep.outputs.sha_short }} --name=models
           oc expose svc/models
