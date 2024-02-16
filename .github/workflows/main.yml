@@ -59,24 +59,6 @@ jobs:
       - name: Deploy to OpenShift
         run: |
            oc login --token=${{ secrets.OPENSHIFT_TOKEN }} --server=${{ secrets.OPENSHIFT_SERVER }}
-           oc project andrea-calderonz-dev 
-           oc new-app davidcas212/models:latest --name=modelos # Replace 'my-application' with the actual application name you want
-           oc expose svc/modelos  # This exposes the service as a rout
-
-  update-k8s:
-    needs: create-and-publish-container
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Set up Kubectl
-        uses: azure/setup-kubectl@v1
-      - name: Set up Kubernetes config
-        uses: azure/k8s-set-context@v1
-        with:
-          method: kubeconfig
-          kubeconfig: ${{ secrets.KUBECONFIG }}
-      - name: Deploy to Kubernetes
-        run: |
-          kubectl set image deployment/your-deployment your-container=yourusername/yourimage:latest
-          # Ajusta este comando según tu configuración específica de Kubernetes.
-          
+           oc project ancalzu-dev 
+           oc new-app davidcas212/models:latest --name=modelos
+           oc expose svc/modelos
