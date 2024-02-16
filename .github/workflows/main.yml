@@ -77,6 +77,7 @@ jobs:
     needs: create-and-publish-container
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - name: Prepare
         id: prep
         run: |
