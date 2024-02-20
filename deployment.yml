@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: backend-0
+  name: models
 spec:
   replicas: 4
   selector:
