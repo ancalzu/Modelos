@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
       - name: application-container
-        image: davidcas212/models:IMAGE_TAG
+        image: davidcas212/models:${IMAGE_TAG}
         ports:
         - containerPort: 8080
