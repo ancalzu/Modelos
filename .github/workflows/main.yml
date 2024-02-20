@@ -71,17 +71,12 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: List files in the repository
-        run: ls -alh
       - name: Update deployment
         env:
           IMAGE_TAG: ${{ needs.create-and-publish-container.outputs.new_version }}
         run: |
           sed -i "s|davidcas212/models:.*|davidcas212/models:${IMAGE_TAG}|" deployment.yml
       - name: cat deployment
-        run: |
-          cat deployment.yml
-      - name: Deploy to OpenShift
         run: |
           oc login --token=${{ secrets.OPENSHIFT_TOKEN }} --server=${{ secrets.OPENSHIFT_SERVER }}
           oc project ancalzu-dev 
