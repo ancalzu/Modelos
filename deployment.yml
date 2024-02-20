@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-0
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: application
+  template:
+    metadata:
+      labels:
+        app: application
+    spec:
+      containers:
+      - name: application-container
+        image: davidcas212/models:TAG_PLACEHOLDER
+        ports:
+        - containerPort: 8080
