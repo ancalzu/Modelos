@@ -1,5 +1,3 @@
-name: Java CI with Maven and Deployment
-
 on:
   push:
     branches: [ "*" ]
@@ -41,10 +39,12 @@ jobs:
   create-and-publish-container:
     needs: integration-test
     runs-on: ubuntu-latest
+    outputs:
+      new_version: ${{ steps.bump_version.outputs.new_tag }} # Definir el output aquí
     steps:
       - uses: actions/checkout@v2
         with:
-          fetch-depth: 0 # Importante para asegurarte de que todos los tags sean traídos
+          fetch-depth: 0
       - name: Bump version and push tag
         id: bump_version
         uses: mathieudutour/github-tag-action@v5.6
@@ -52,10 +52,6 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           release_branches: main
           default_bump: patch
-          # Configura esto según tus preferencias de versionamiento
-          # Puedes personalizar cómo se calcula el nuevo tag (major, minor, patch)
-      - name: Set new tag as env var
-        run: echo "VERSION=${{ steps.bump_version.outputs.new_tag }}" >> $GITHUB_ENV
       - name: Log in to Docker Hub
         uses: docker/login-action@v1
         with:
@@ -67,7 +63,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: davidcas212/models:${{ env.VERSION }} # Usa el nuevo tag como versión
+          tags: davidcas212/models:${{ steps.bump_version.outputs.new_tag }}
 
   deploy-shift:
     needs: create-and-publish-container
@@ -77,5 +73,5 @@ jobs:
         run: |
           oc login --token=${{ secrets.OPENSHIFT_TOKEN }} --server=${{ secrets.OPENSHIFT_SERVER }}
           oc project ancalzu-dev 
-          oc new-app davidcas212/models:${{ env.VERSION }} --name=models
+          oc new-app davidcas212/models:${{ needs.create-and-publish-container.outputs.new_version }} --name=models
           oc expose svc/models
