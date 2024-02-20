@@ -69,9 +69,11 @@ jobs:
     needs: create-and-publish-container
     runs-on: ubuntu-latest
     steps:
+      - name: List files in the repository
+        run: ls -alh
       - name: Update deployment
         env:
-          IMAGE_TAG: ${{ steps.bump_version.outputs.new_tag }}
+          IMAGE_TAG: ${{ needs.create-and-publish-container.outputs.new_version }}
         run: |
           sed -i 's|davidcas212/models:${{ env.IMAGE_TAG }}|davidcas212/models:${{ env.IMAGE_TAG }}|' deployment.yml
 
