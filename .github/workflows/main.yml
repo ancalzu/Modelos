@@ -73,7 +73,7 @@ jobs:
         env:
           IMAGE_TAG: ${{ steps.bump_version.outputs.new_tag }}
         run: |
-          sed -i 's|davidcas212/models:IMAGE_TAG|davidcas212/models:${{ steps.bump_version.outputs.new_tag }}|' ./deployment.yml
+          sed -i 's|davidcas212/models:IMAGE_TAG|davidcas212/models:${{ steps.bump_version.outputs.new_tag }}|' ../deployment.yml
 
       - name: Deploy to OpenShift
         run: |
