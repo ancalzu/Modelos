@@ -78,7 +78,9 @@ jobs:
           IMAGE_TAG: ${{ needs.create-and-publish-container.outputs.new_version }}
         run: |
           sed -i 's|davidcas212/models:${{ env.IMAGE_TAG }}|davidcas212/models:${{ env.IMAGE_TAG }}|' deployment.yml
-
+      - name: cat deployment
+        run: |
+          cat deployment.yml
       - name: Deploy to OpenShift
         run: |
           oc login --token=${{ secrets.OPENSHIFT_TOKEN }} --server=${{ secrets.OPENSHIFT_SERVER }}
