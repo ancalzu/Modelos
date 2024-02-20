@@ -77,7 +77,7 @@ jobs:
         env:
           IMAGE_TAG: ${{ needs.create-and-publish-container.outputs.new_version }}
         run: |
-          sed -i 's|davidcas212/models:${{ env.IMAGE_TAG }}|davidcas212/models:${{ env.IMAGE_TAG }}|' deployment.yml
+          sed -i "s|davidcas212/models:.*|davidcas212/models:${IMAGE_TAG}|" deployment.yml
       - name: cat deployment
         run: |
           cat deployment.yml
