@@ -69,6 +69,8 @@ jobs:
     needs: create-and-publish-container
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
       - name: List files in the repository
         run: ls -alh
       - name: Update deployment
