@@ -86,3 +86,4 @@ jobs:
           oc login --token=${{ secrets.OPENSHIFT_TOKEN }} --server=${{ secrets.OPENSHIFT_SERVER }}
           oc project ancalzu-dev 
           oc apply -f ./deployment.yml
+          oc expose svc/backend-0
