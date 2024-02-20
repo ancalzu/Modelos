@@ -69,8 +69,6 @@ jobs:
           push: true
           tags: davidcas212/models:${{ env.VERSION }} # Usa el nuevo tag como versión
 
-
-
   deploy-shift:
     needs: create-and-publish-container
     runs-on: ubuntu-latest
