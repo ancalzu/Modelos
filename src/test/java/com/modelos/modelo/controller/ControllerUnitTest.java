@@ -20,7 +20,7 @@ class ControllerUnitTest {
     public void testHelloWorldEndpoint() throws Exception {
         mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
-                .andExpect(content().string("Hello world since openshift"));
+                .andExpect(content().string("Hello world since openshift with our deployment"));
     }
 
 }
