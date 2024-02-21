@@ -1,16 +1,44 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: models
+  name: backend-0
 spec:
-  replicas: 4
+  replicas: 1
+  selector:
+    matchLabels:
+      app: application
   template:
     metadata:
       labels:
         app: application
     spec:
       containers:
-      - name: application-container
-        image: davidcas212/models:${IMAGE_TAG}
-        ports:
-        - containerPort: 8080
+        - name: application-container
+          image: davidcas212/models:${IMAGE_TAG}
+          ports:
+            - containerPort: 8080
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: application-service
+spec:
+  selector:
+    app: application
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: application-route
+spec:
+  to:
+    kind: Service
+    name: application-service
+  port:
+    targetPort: 8080
