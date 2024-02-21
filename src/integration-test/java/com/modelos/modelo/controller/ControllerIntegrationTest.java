@@ -23,6 +23,6 @@ class ControllerIntegrationTest {
     @Test
     public void testHelloWorldEndpoint() {
         ResponseEntity<String> response = restTemplate.getForEntity("/", String.class);
-        assertEquals("Test functionality", response.getBody());
+        assertEquals("Test functionality!", response.getBody());
     }
 }
